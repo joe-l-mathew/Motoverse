@@ -4,7 +4,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../bloc/bluetooth/bluetooth_bloc.dart';
 import '../functions/permision.dart';
-import 'select_device.dart';
+import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -26,8 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<BluetoothBloc, BluetoothState>(
       builder: (context, state) {
-        if (state.isTurnedOn) {
-          return SelectDevice();
+        if (state.isTurnedOn && state.isConnected) {
+          return HomeScreen();
         }
         return Scaffold(
           backgroundColor: Colors.black,
@@ -36,9 +36,17 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset('asset/logo.png'),
-                LoadingAnimationWidget.staggeredDotsWave(
-                  color: Colors.white,
-                  size: 50,
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(state.statusText),
+                      LoadingAnimationWidget.prograssiveDots(
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

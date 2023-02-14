@@ -8,3 +8,10 @@ class TurnOnBluetooth extends BluetoothEvent {
 
   TurnOnBluetooth({required this.isTurnedOn});
 }
+
+class ConnectionStatusUpdate extends BluetoothEvent {
+  final bool isConnected;
+  ConnectionStatusUpdate({
+    required this.isConnected,
+  });
+}
