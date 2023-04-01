@@ -26,10 +26,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double tempVal = 0;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Center(child: BlocBuilder<DataBloc, DataState>(
         builder: (context, state) {
+          try {
+            print("prased: ${double.parse(state.battryTemp!)}");
+            tempVal = double.parse(state.battryTemp!);
+          } catch (e) {
+            print("error $e");
+          }
           return Column(
             children: [
               Container(
@@ -97,11 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         trailing: state.battryTemp == null
                             ? const Text("Loading..")
                             : Text(
-                                "${state.battryTemp!} °C",
+                                "${tempVal} °C",
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 18,
-                                    color: double.parse(state.battryTemp!) > 35
+                                    color: tempVal > 35
                                         ? Colors.red
                                         : Colors.green),
                               ),
